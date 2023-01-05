@@ -1,5 +1,5 @@
-import Piece
-import Rook
+from pieces.Piece import Piece
+from pieces.Rook import Rook
 import copy
 
 
@@ -15,93 +15,85 @@ class King(Piece):
 
         # Up
         if self.position[0] + 1 < 8:
-            if board[self.position[0] + 1][self.position[1]] == 0:
+            if board.getPiece(self.position[0] + 1, self.position[1]) == None:
                 moves.append((self.position[0] + 1, self.position[1]))
             else:
-                if board[self.position[0] + 1][self.position[1]].getColor() != self.color:
+                if board.getPiece(self.position[0] + 1, self.position[1]).getColor() != self.color:
                     moves.append((self.position[0] + 1, self.position[1]))
 
         # Down
         if self.position[0] - 1 >= 0:
-            if board[self.position[0] - 1][self.position[1]] == 0:
+            if board.getPiece(self.position[0] - 1, self.position[1]) == None:
                 moves.append((self.position[0] - 1, self.position[1]))
             else:
-                if board[self.position[0] - 1][self.position[1]].getColor() != self.color:
+                if board.getPiece(self.position[0] - 1, self.position[1]).getColor() != self.color:
                     moves.append((self.position[0] - 1, self.position[1]))
 
         # Right
         if self.position[1] + 1 < 8:
-            if board[self.position[0]][self.position[1] + 1] == 0:
+            if board.getPiece(self.position[0], self.position[1] + 1) == None:
                 moves.append((self.position[0], self.position[1] + 1))
             else:
-                if board[self.position[0]][self.position[1] + 1].getColor() != self.color:
+                if board.getPiece(self.position[0], self.position[1] + 1).getColor() != self.color:
                     moves.append((self.position[0], self.position[1] + 1))
 
         # Left
         if self.position[1] - 1 >= 0:
-            if board[self.position[0]][self.position[1] - 1] == 0:
+            if board.getPiece(self.position[0], self.position[1] - 1) == None:
                 moves.append((self.position[0], self.position[1] - 1))
             else:
-                if board[self.position[0]][self.position[1] - 1].getColor() != self.color:
+                if board.getPiece(self.position[0], self.position[1] - 1).getColor() != self.color:
                     moves.append((self.position[0], self.position[1] - 1))
 
         # Up-Right
         if self.position[0] + 1 < 8 and self.position[1] + 1 < 8:
-            if board[self.position[0] + 1][self.position[1] + 1] == 0:
+            if board.getPiece(self.position[0] + 1, self.position[1] + 1) == None:
                 moves.append((self.position[0] + 1, self.position[1] + 1))
             else:
-                if board[self.position[0] + 1][self.position[1] + 1].getColor() != self.color:
+                if board.getPiece(self.position[0] + 1, self.position[1] + 1).getColor() != self.color:
                     moves.append((self.position[0] + 1, self.position[1] + 1))
 
         # Up-Left
         if self.position[0] + 1 < 8 and self.position[1] - 1 >= 0:
-            if board[self.position[0] + 1][self.position[1] - 1] == 0:
+            if board.getPiece(self.position[0] + 1, self.position[1] - 1) == None:
                 moves.append((self.position[0] + 1, self.position[1] - 1))
             else:
-                if board[self.position[0] + 1][self.position[1] - 1].getColor() != self.color:
+                if board.getPiece(self.position[0] + 1, self.position[1] - 1).getColor() != self.color:
                     moves.append((self.position[0] + 1, self.position[1] - 1))
 
         # Down-Right
         if self.position[0] - 1 >= 0 and self.position[1] + 1 < 8:
-            if board[self.position[0] - 1][self.position[1] + 1] == 0:
+            if board.getPiece(self.position[0] - 1, self.position[1] + 1) == None:
                 moves.append((self.position[0] - 1, self.position[1] + 1))
             else:
-                if board[self.position[0] - 1][self.position[1] + 1].getColor() != self.color:
+                if board.getPiece(self.position[0] - 1, self.position[1] + 1).getColor() != self.color:
                     moves.append((self.position[0] - 1, self.position[1] + 1))
 
         # Down-Left
         if self.position[0] - 1 >= 0 and self.position[1] - 1 >= 0:
-            if board[self.position[0] - 1][self.position[1] - 1] == 0:
+            if board.getPiece(self.position[0] - 1, self.position[1] - 1) == None:
                 moves.append((self.position[0] - 1, self.position[1] - 1))
             else:
-                if board[self.position[0] - 1][self.position[1] - 1].getColor() != self.color:
+                if board.getPiece(self.position[0] - 1, self.position[1] - 1).getColor() != self.color:
                     moves.append((self.position[0] - 1, self.position[1] - 1))
 
         # Castling
         if self.color == "white":
             if self.position == (7, 4):
-                if board[7][7] != 0:
-                    if isinstance(board[7][7], Rook.Rook):
-                        if board[7][7].getMoved() == False:
-                            if board[7][5] == 0 and board[7][6] == 0:
-                                moves.append((7, 6))
-                if board[7][0] != 0:
-                    if isinstance(board[7][0], Rook.Rook):
-                        if board[7][0].getMoved() == False:
-                            if board[7][1] == 0 and board[7][2] == 0 and board[7][3] == 0:
-                                moves.append((7, 2))
+                if board.getPiece(7, 0) and board.getPiece(7, 0).getColor() == "white" and board.getPiece(7, 0).getMoved() == False:
+                    if board.getPiece(7, 1) == None and board.getPiece(7, 2) == None and board.getPiece(7, 3) == None:
+                        moves.append((7, 2))
+                if board.getPiece(7, 7) and board.getPiece(7, 7).getColor() == "white" and board.getPiece(7, 7).getMoved() == False:
+                    if board.getPiece(7, 5) == None and board.getPiece(7, 6) == None:
+                        moves.append((7, 6))
         else:
             if self.position == (0, 4):
-                if board[0][7] != 0:
-                    if isinstance(board[0][7], Rook.Rook):
-                        if board[0][7].getMoved() == False:
-                            if board[0][5] == 0 and board[0][6] == 0:
-                                moves.append((0, 6))
-                if board[0][0] != 0:
-                    if isinstance(board[0][0], Rook.Rook):
-                        if board[0][0].getMoved() == False:
-                            if board[0][1] == 0 and board[0][2] == 0 and board[0][3] == 0:
-                                moves.append((0, 2))
+                if board.getPiece(0, 0) and board.getPiece(0, 0).getColor() == "black" and board.getPiece(0, 0).getMoved() == False:
+                    if board.getPiece(0, 1) == None and board.getPiece(0, 2) == None and board.getPiece(0, 3) == None:
+                        moves.append((0, 2))
+                if board.getPiece(0, 7) and board.getPiece(0, 7).getColor() == "black" and board.getPiece(0, 7).getMoved() == False:
+                    if board.getPiece(0, 5) == None and board.getPiece(0, 6) == None:
+                        moves.append((0, 6))
 
         # remove moves that put the king in check
         returnMoves = []
@@ -110,9 +102,8 @@ class King(Piece):
         # if the king is not in check, add the move to the list of valid moves
         for move in moves:
             boardCopy = copy.deepcopy(board)
-            boardCopy[self.position[0]][self.position[1]] = 0
-            boardCopy[move[0]][move[1]] = self
-            if self.isCheck(boardCopy) == False:
+            boardCopy.movePiece(self.position, move)
+            if not boardCopy.isCheck(self.color):
                 returnMoves.append(move)
 
         return returnMoves
@@ -123,20 +114,18 @@ class King(Piece):
         :param board: The board
         :return: True if the king is in check, False otherwise
         """
-        if self.color == 1:
+        if self.color == "white":
             for i in range(8):
                 for j in range(8):
-                    if board[i][j] != 0:
-                        if board[i][j].getColor() == 0:
-                            if self.position in board[i][j].getMoves(board):
-                                return True
+                    if board.getPiece(i, j) and board.getPiece(i, j).getColor() == "black":
+                        if (self.position[0], self.position[1]) in board.getPiece(i, j).getMoves(board):
+                            return True
         else:
             for i in range(8):
                 for j in range(8):
-                    if board[i][j] != 0:
-                        if board[i][j].getColor() == 1:
-                            if self.position in board[i][j].getMoves(board):
-                                return True
+                    if board.getPiece(i, j) and board.getPiece(i, j).getColor() == "white":
+                        if (self.position[0], self.position[1]) in board.getPiece(i, j).getMoves(board):
+                            return True
         return False
 
     def isCheckmate(self, board):
@@ -153,6 +142,25 @@ class King(Piece):
                             if board[i][j].getMoves(board) != []:
                                 return False
             return True
+        return False
+
+    def isStalemate(self, board):
+        """
+        Checks if the king is in stalemate
+        :param board: The board
+        :return: True if the king is in stalemate, False otherwise
+        """
+        if not self.isCheck(board):
+            # check if any of the pieces can move
+            for i in range(8):
+                for j in range(8):
+                    if board.getPiece(i, j) != None:
+                        if board.getPiece(i, j).getColor() == self.color:
+                            if board.getPiece(i, j).getMoves(board) != []:
+                                return False
+
+            return True
+
         return False
 
     def getSymbol(self):
