@@ -102,8 +102,22 @@ class ChessGame:
             self.printBoard()
             print("It is " + self.turn + "'s turn")
 
+            # expects input in the form of "x,y"
             start = input("Enter the start position: ")
-            end = input("Enter the end position: ")
+            start = start.split(",")
+            start = (int(start[0]), int(start[1]))
 
-            if not self.move((int(start[0]), int(start[1])), (int(end[0]), int(end[1]))):
+            end = input("Enter the end position: ")
+            end = end.split(",")
+            end = (int(end[0]), int(end[1]))
+
+            if not self.move(start, end):
                 print("Invalid move")
+
+        self.printBoard()
+
+        if self.isCheckmate():
+            print("Checkmate! " + ("White" if self.turn ==
+                  "black" else "Black") + " wins!")
+        elif self.isDraw():
+            print("Draw!")

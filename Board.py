@@ -54,10 +54,10 @@ class Board:
         return False
 
     def printBoard(self):
-        for row in self.board:
-            for piece in row:
-                if piece is None:
+        for i in range(8):
+            for j in range(8):
+                if self.getPiece(i, j) is None:
                     print(" ", end=" ")
                 else:
-                    print(piece, end=" ")
+                    print(self.getPiece(i, j).getSymbol(), end=" ")
             print()
