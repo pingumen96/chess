@@ -103,8 +103,6 @@ class King(Piece):
         if verifyCheck:
             for move in moves:
                 boardCopy = copy.deepcopy(board)
-                print("debug " + str(self.position) + "  " +
-                      str(boardCopy.getPiece(self.position[0], self.position[1])))
                 boardCopy.movePiece(self.position, move)
                 if not boardCopy.getPiece(move[0], move[1]).isCheck(boardCopy):
                     returnMoves.append(move)
@@ -123,11 +121,13 @@ class King(Piece):
                     piece = board.getPiece(i, j)
                     if piece and piece.getColor() == "black":
                         moves = None
+
                         # if the piece is instanceof King, make a different call to getMoves
                         if isinstance(piece, King):
                             moves = piece.getMoves(board, False)
                         else:
                             moves = piece.getMoves(board)
+
                         if (self.position[0], self.position[1]) in moves:
                             return True
         else:

@@ -5,7 +5,7 @@ class Knight(Piece):
     def __init__(self, color, position):
         Piece.__init__(self, color, position)
 
-    def getMoves(self, board):
+    def getMoves(self, board, verifyCheck=True):
         moves = []
 
         # Up 2
@@ -76,7 +76,10 @@ class Knight(Piece):
                         moves.append(
                             (self.position[0] - 1, self.position[1] - 2))
 
-        return moves
+        if verifyCheck:
+            return self.filterMoves(board, moves)
+        else:
+            return moves
 
     def getSymbol(self):
         if self.color == "white":

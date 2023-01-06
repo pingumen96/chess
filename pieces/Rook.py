@@ -5,7 +5,7 @@ class Rook(Piece):
     def __init__(self, color, position):
         Piece.__init__(self, color, position)
 
-    def getMoves(self, board):
+    def getMoves(self, board, verifyCheck=True):
         moves = []
 
         # check all the squares in the same row
@@ -68,7 +68,10 @@ class Rook(Piece):
             else:
                 break
 
-        return moves
+        if verifyCheck:
+            return self.filterMoves(board, moves)
+        else:
+            return moves
 
     def getSymbol(self):
         if self.color == 'white':

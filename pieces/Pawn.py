@@ -13,7 +13,7 @@ class Pawn(Piece):
     def setDoubleMoved(self, doubleMoved):
         self.doubleMoved = doubleMoved
 
-    def getMoves(self, board):
+    def getMoves(self, board, verifyCheck=True):
         moves = []
         if self.color == "white":
             # check if pawn can move forward
@@ -87,7 +87,10 @@ class Pawn(Piece):
                             moves.append(
                                 (self.position[0] + 1, self.position[1] + 1))
 
-        return moves
+        if verifyCheck:
+            return self.filterMoves(board, moves)
+        else:
+            return moves
 
     def getSymbol(self):
         if self.color == "white":

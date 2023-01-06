@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+import copy
 
 
 class Piece(ABC):
@@ -22,8 +23,23 @@ class Piece(ABC):
     def setMoved(self, moved):
         self.moved = moved
 
+    def filterMoves(self, board, moves):
+        # if there is a check, remove all moves that don't remove the check
+        if board.isCheck(self.color):
+            returnMoves = []
+
+            # do the move in a copy of the board
+            for move in moves:
+                copyBoard = copy.deepcopy(board)
+                copyBoard.movePiece(self.position, move)
+                if not copyBoard.isCheck(self.color):
+                    returnMoves.append(move)
+            return returnMoves
+        else:
+            return moves
+
     @abstractmethod
-    def getMoves(self, board):
+    def getMoves(self, board, verifyCheck=True):
         """
         :param board: The board the piece is on
         :return: A list of tuples of the possible moves

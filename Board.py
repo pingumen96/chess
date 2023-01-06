@@ -53,7 +53,7 @@ class Board:
         for i in range(8):
             for j in range(8):
                 if self.getPiece(i, j) is not None and self.getPiece(i, j).getColor() != color:
-                    for move in self.getPiece(i, j).getMoves(self):
+                    for move in self.getPiece(i, j).getMoves(self, False):
                         if move == king.getPosition():
                             return True
         return False

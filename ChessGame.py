@@ -104,7 +104,6 @@ class ChessGame:
             print("It is " + self.turn + "'s turn")
 
             if random:
-
                 # get random piece in the board, which means that the piece is not None and the piece's color is the same as the turn
                 piece = self.board.getPiece(randint(0, 7), randint(0, 7))
 

@@ -5,7 +5,7 @@ class Bishop(Piece):
     def __init__(self, color, position):
         Piece.__init__(self, color, position)
 
-    def getMoves(self, board):
+    def getMoves(self, board, verifyCheck=True):
         moves = []
 
         # up left
@@ -60,7 +60,10 @@ class Bishop(Piece):
             else:
                 break
 
-        return moves
+        if verifyCheck:
+            return self.filterMoves(board, moves)
+        else:
+            return moves
 
     def getSymbol(self):
         if self.color == 'white':
