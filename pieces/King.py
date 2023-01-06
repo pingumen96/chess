@@ -7,7 +7,7 @@ class King(Piece):
     def __init__(self, color, position):
         Piece.__init__(self, color, position)
 
-    def getMoves(self, board):
+    def getMoves(self, board, verifyCheck=True):
         """
         Returns a list of all possible moves for the King, without the moves that would put the King in check.
         """
@@ -100,11 +100,14 @@ class King(Piece):
 
         # for each move, make a copy of the board and move the piece to the new position
         # if the king is not in check, add the move to the list of valid moves
-        for move in moves:
-            boardCopy = copy.deepcopy(board)
-            boardCopy.movePiece(self.position, move)
-            if not boardCopy.isCheck(self.color):
-                returnMoves.append(move)
+        if verifyCheck:
+            for move in moves:
+                boardCopy = copy.deepcopy(board)
+                print("debug " + str(self.position) + "  " +
+                      str(boardCopy.getPiece(self.position[0], self.position[1])))
+                boardCopy.movePiece(self.position, move)
+                if not boardCopy.getPiece(move[0], move[1]).isCheck(boardCopy):
+                    returnMoves.append(move)
 
         return returnMoves
 
@@ -117,14 +120,28 @@ class King(Piece):
         if self.color == "white":
             for i in range(8):
                 for j in range(8):
-                    if board.getPiece(i, j) and board.getPiece(i, j).getColor() == "black":
-                        if (self.position[0], self.position[1]) in board.getPiece(i, j).getMoves(board):
+                    piece = board.getPiece(i, j)
+                    if piece and piece.getColor() == "black":
+                        moves = None
+                        # if the piece is instanceof King, make a different call to getMoves
+                        if isinstance(piece, King):
+                            moves = piece.getMoves(board, False)
+                        else:
+                            moves = piece.getMoves(board)
+                        if (self.position[0], self.position[1]) in moves:
                             return True
         else:
             for i in range(8):
                 for j in range(8):
-                    if board.getPiece(i, j) and board.getPiece(i, j).getColor() == "white":
-                        if (self.position[0], self.position[1]) in board.getPiece(i, j).getMoves(board):
+                    piece = board.getPiece(i, j)
+                    if piece and piece.getColor() == "white":
+                        moves = None
+                        # if the piece is instanceof King, make a different call to getMoves
+                        if isinstance(piece, King):
+                            moves = piece.getMoves(board, False)
+                        else:
+                            moves = piece.getMoves(board)
+                        if (self.position[0], self.position[1]) in moves:
                             return True
         return False
 
@@ -137,10 +154,11 @@ class King(Piece):
         if self.isCheck(board):
             for i in range(8):
                 for j in range(8):
-                    if board[i][j] != 0:
-                        if board[i][j].getColor() == self.color:
-                            if board[i][j].getMoves(board) != []:
+                    if board.getPiece(i, j) != None:
+                        if board.getPiece(i, j).getColor() == self.color:
+                            if board.getPiece(i, j).getMoves(board) != []:
                                 return False
+
             return True
         return False
 

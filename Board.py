@@ -44,6 +44,20 @@ class Board:
             return True
         return False
 
+    def isCheck(self, color):
+        king = None
+        for i in range(8):
+            for j in range(8):
+                if isinstance(self.getPiece(i, j), King) and self.getPiece(i, j).getColor() == color:
+                    king = self.getPiece(i, j)
+        for i in range(8):
+            for j in range(8):
+                if self.getPiece(i, j) is not None and self.getPiece(i, j).getColor() != color:
+                    for move in self.getPiece(i, j).getMoves(self):
+                        if move == king.getPosition():
+                            return True
+        return False
+
     def setPiece(self, x, y, piece):
         self.board[x][y] = piece
 
@@ -54,10 +68,14 @@ class Board:
         return False
 
     def printBoard(self):
+        # print coordinates
+        print("  0 1 2 3 4 5 6 7")
         for i in range(8):
+            print(i, end=" ")
             for j in range(8):
                 if self.getPiece(i, j) is None:
-                    print(" ", end=" ")
+                    print("·", end=" ")
                 else:
                     print(self.getPiece(i, j).getSymbol(), end=" ")
             print()
+        print("  0 1 2 3 4 5 6 7")

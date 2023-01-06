@@ -3,7 +3,7 @@ import ChessGame
 
 def main():
     game = ChessGame.ChessGame()
-    game.runGame()
+    game.runGame(True)
 
 
 main()

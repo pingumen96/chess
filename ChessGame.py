@@ -1,10 +1,11 @@
-import Board
+from Board import Board
 from pieces.King import King
+from random import randint
 
 
 class ChessGame:
     def __init__(self):
-        self.board = Board.Board()
+        self.board = Board()
         self.turn = "white"
 
     def getBoard(self):
@@ -93,7 +94,7 @@ class ChessGame:
                 return True
         return False
 
-    def runGame(self):
+    def runGame(self, random=False):
         """
         Runs the game
         :return: None
@@ -102,17 +103,37 @@ class ChessGame:
             self.printBoard()
             print("It is " + self.turn + "'s turn")
 
-            # expects input in the form of "x,y"
-            start = input("Enter the start position: ")
-            start = start.split(",")
-            start = (int(start[0]), int(start[1]))
+            if random:
 
-            end = input("Enter the end position: ")
-            end = end.split(",")
-            end = (int(end[0]), int(end[1]))
+                # get random piece in the board, which means that the piece is not None and the piece's color is the same as the turn
+                piece = self.board.getPiece(randint(0, 7), randint(0, 7))
 
-            if not self.move(start, end):
-                print("Invalid move")
+                while piece is None or piece.getColor() != self.turn or len(piece.getMoves(self.board)) == 0:
+                    piece = self.board.getPiece(randint(0, 7), randint(0, 7))
+
+                move = piece.getMoves(self.board)[randint(
+                    0, len(piece.getMoves(self.board)) - 1)]
+
+                oldPosition = piece.getPosition()
+
+                # print the move
+                print(self.turn + " moved " + piece.getSymbol() +
+                      " from " + str(oldPosition) + " to " + str(move))
+
+                # move the piece
+                self.move(piece.getPosition(), move)
+            else:
+                # expects input in the form of "x,y"
+                start = input("Enter the start position: ")
+                start = start.split(",")
+                start = (int(start[0]), int(start[1]))
+
+                end = input("Enter the end position: ")
+                end = end.split(",")
+                end = (int(end[0]), int(end[1]))
+
+                if not self.move(start, end):
+                    print("Invalid move")
 
         self.printBoard()
 

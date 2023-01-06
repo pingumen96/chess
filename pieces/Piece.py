@@ -36,3 +36,6 @@ class Piece(ABC):
         :return: The symbol of the piece
         """
         pass
+
+    def __str__(self):
+        return self.getSymbol() + " " + self.color + " " + str(self.position)
