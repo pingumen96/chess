@@ -127,3 +127,13 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+.VSCodeCounter/2023-01-06_17-33-32/diff.csv
+.gitignore
+.VSCodeCounter/2023-01-06_17-33-32/details.md
+.VSCodeCounter/2023-01-06_17-33-32/diff-details.md
+.VSCodeCounter/2023-01-06_17-33-32/diff.md
+.VSCodeCounter/2023-01-06_17-33-32/diff.txt
+.VSCodeCounter/2023-01-06_17-33-32/results.csv
+.VSCodeCounter/2023-01-06_17-33-32/results.json
+.VSCodeCounter/2023-01-06_17-33-32/results.txt
+.VSCodeCounter/2023-01-06_17-33-32/results.md
