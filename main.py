@@ -47,8 +47,8 @@ def minimax(board, depth, alpha, beta, maximizingPlayer):
             alpha = max(alpha, eval)
 
             # alpha-beta pruning
-            # if beta <= alpha:
-            #    break
+            if beta <= alpha:
+                break
         return maxEval
     else:
         minEval = 9999
