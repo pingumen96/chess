@@ -1,9 +1,5 @@
-import ChessGame
+import chess
 
+board = chess.Board()
 
-def main():
-    game = ChessGame.ChessGame()
-    game.runGame(True)
-
-
-main()
+print(board)
